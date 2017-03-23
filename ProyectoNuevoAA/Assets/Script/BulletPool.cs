@@ -55,7 +55,7 @@ public class BulletPool : MonoBehaviour {
 
     GameObject InstantiateBullet()
     {
-        GameObject obj = Instantiate(bulletPrefab, barrel.position, Quaternion.identity) as GameObject;
+		GameObject obj = Instantiate(bulletPrefab, barrel.position, Quaternion.identity) as GameObject;
         bullets.Add(obj);
         return obj;
     }
