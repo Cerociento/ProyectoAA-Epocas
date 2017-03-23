@@ -15,15 +15,14 @@ public class EnemyBehaviour : MonoBehaviour {
 	GameObject player;
 
 	//MOVIMIENTO//
-
-	NavMeshAgent agent;
+	public float timer;
+	public NavMeshAgent agent;
+	public Vector3 Target;
 	[SerializeField]
-	Transform[] wayPoint;
-	int nextPoint;
-	public float wait=5f;
+	float range;
+	float wait=5f;
 	[SerializeField] 
 	float timeToWait;
-
 
 	//DISPARO//
 	List<GameObject> pool = new List<GameObject>();
@@ -36,6 +35,7 @@ public class EnemyBehaviour : MonoBehaviour {
 	int maxBullets = 10;
 	[SerializeField]
 	float fireRate=1f;
+	float rate;
 
 	// Use this for initialization
 	void Start () {
@@ -70,7 +70,7 @@ public class EnemyBehaviour : MonoBehaviour {
 		}
 		currentState=States.Move;
 		agent.enabled=true;
-		NextWayPoint();
+		NextTarget();
 		updateCurrentState+=EnemyMoves;
 	}
 
@@ -88,17 +88,33 @@ public class EnemyBehaviour : MonoBehaviour {
 
 
 	//MOVIMIENTO//
-	void NextWayPoint(){
+	/*void NextWayPoint(){
 		if(wayPoint.Length==0)
 			return;
 		agent.destination=wayPoint[nextPoint].position;
 		nextPoint=(nextPoint+1)%wayPoint.Length;
-		}
+		}*/
 
+	void NextTarget(){
+		float xEnemy=gameObject.transform.position.x;
+		float zEnemy=gameObject.transform.position.z;
+
+		float xPos=Random.Range(xEnemy-range, xEnemy+range);
+		float zPos=Random.Range(zEnemy-range, zEnemy+range);
+
+		Target=new Vector3(xPos,gameObject.transform.position.y,zPos);
+
+		agent.SetDestination(Target);
+	}
 
 
 
 	void EnemyMoves(){
+		/*timer+=Time.deltaTime;
+		if(timer>=newTarget){
+			NextTarget();
+			timer=0;
+		}*/
 		if(agent.remainingDistance<0.1f){
 			//transform.LookAt(player.transform.position);
 			ToFire();
@@ -124,11 +140,11 @@ public class EnemyBehaviour : MonoBehaviour {
 		Debug.Log("Attack");
 		transform.LookAt(player.transform.position);
 		agent.enabled=false;
-		fireRate-=Time.deltaTime;
-		if(fireRate<0f){
+		rate-=Time.deltaTime;
+		if(rate<0f){
 			Debug.Log("Pew pew");
 			Fire();
-			fireRate=1f;
+			rate+=fireRate;
 		}
 		wait-=Time.deltaTime;
 		if(wait<0f){
