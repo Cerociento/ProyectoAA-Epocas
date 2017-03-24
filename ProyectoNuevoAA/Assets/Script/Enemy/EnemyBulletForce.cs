@@ -3,42 +3,39 @@ using System.Collections;
 
 public class EnemyBulletForce : MonoBehaviour {
 
-		Rigidbody rigid;
-		[SerializeField]
-		float bulletSpeed = 10f;
-		[SerializeField]
-		float lifeTimeBullet = 3;
+	Rigidbody rigid;
+	[SerializeField]
+	float bulletSpeed = 10f;
+	[SerializeField]
+	float lifeTimeBullet = 3;
 
-		void Awake()
-		{
-			rigid = GetComponent<Rigidbody>();
-		}
+	void Awake()
+	{
+		rigid = GetComponent<Rigidbody>();
+	}
 
-		void OnEnable ()
-		{
+	void OnEnable ()
+	{
         rigid.WakeUp();
         rigid.isKinematic = false;
-        Invoke("lifeTime", lifeTimeBullet);
 		rigid.AddForce(transform.forward * bulletSpeed, ForceMode.Impulse);
-		}
+        Invoke("lifeTime", lifeTimeBullet);
+    }
 
-		void OnDisable()
-		{
+    void OnDisable()
+	{
 		rigid.Sleep();
 		CancelInvoke();
-		}
+	}
 
-		void lifeTime()
-		{
+	void lifeTime()
+	{
         gameObject.SetActive(false);	
-		}
+	}
 
 	void OnCollisionEnter(Collision other)
 	{
-			if (other.collider.CompareTag("Player"))
-			{
-				gameObject.SetActive(false);
-			}
+		gameObject.SetActive(false);
 	}
-	}
+}
 

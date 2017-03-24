@@ -46,9 +46,7 @@ public class EnemyBehaviour : MonoBehaviour {
 			GameObject obj=(GameObject)Instantiate(bullet,canon.transform.position,Quaternion.identity, gunMagazine.transform);
 			obj.SetActive(false);
 			pool.Add(obj);
-
 		}
-
 	}
 	
 	// Update is called once per frame
@@ -76,7 +74,7 @@ public class EnemyBehaviour : MonoBehaviour {
 
 	void ToFire(){
 		
-		Debug.Log("Estoy aquí");
+		//Debug.Log("Estoy aquí");
 		if(currentState==States.Shoot){
 			return;
 		} else if (currentState==States.Move){
@@ -130,14 +128,14 @@ public class EnemyBehaviour : MonoBehaviour {
 				pool[i].transform.position=canon.transform.position;
 				pool[i].transform.rotation=canon.transform.rotation;
 				pool[i].SetActive(true);
-				Debug.Log("Bala va");
+				//Debug.Log("Bala va");
 				break;
 			}
 		}
 	}
 
 	void Attack(){
-		Debug.Log("Attack");
+		//Debug.Log("Attack");
 		transform.LookAt(player.transform.position);
 		agent.enabled=false;
 		rate-=Time.deltaTime;

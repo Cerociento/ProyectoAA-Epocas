@@ -110,9 +110,10 @@ public class BulletPool : MonoBehaviour {
     void Shoot()
     {
         /*
-         0 = Gun // Delay 0.3 
+         0/3 = Gun/BulletBounce // Delay 0.3 
          1 = Machine Gun // Delay = 4
          2 = Shotgun // Delay = 0.5
+         4 = Grenade
           */
 
         if (weaponClass == 0|| weaponClass == 3)
@@ -152,5 +153,14 @@ public class BulletPool : MonoBehaviour {
                 }
             }
         }
+        else if (weaponClass == 4)
+        {
+            if (Input.GetButtonDown("Fire2"))
+            {
+                GetBullet();
+            }
+        }
+
+
     }
 }

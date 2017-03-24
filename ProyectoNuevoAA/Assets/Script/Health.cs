@@ -10,7 +10,8 @@ public class Health : MonoBehaviour {
     bool noEnemyDamage;
     float timeDamage = 2f;
     Color col;
-    float alfaDuration = 0.5f;
+    [SerializeField]
+    float flickerSpeed = 0.5f;
 
     void Start()
     {
@@ -24,12 +25,22 @@ public class Health : MonoBehaviour {
 
     void OnCollisionEnter(Collision col)
     {
-		if(col.collider.CompareTag("Bullet"))
+		if(col.collider.CompareTag("BulletEnemy"))
         {
 			health--;
             noEnemyDamage = true;
 		}
-		if(health==0)
+        else if(!noEnemy && col.collider.CompareTag("Bullet"))
+        {
+            health--;
+        }
+
+        if (!noEnemy && col.collider.CompareTag("Grenade"))
+        {
+            health = health - 2;
+        }
+
+            if (health==0)
         {
 			gameObject.SetActive(false);
 		}
@@ -41,7 +52,7 @@ public class Health : MonoBehaviour {
         {
             if (noEnemyDamage)
             {
-                float lerp = Mathf.PingPong(Time.time, alfaDuration) / alfaDuration;
+                float lerp = Mathf.PingPong(Time.time, flickerSpeed) / flickerSpeed;
                 col.a = Mathf.Lerp(0, 1, lerp);
                 transform.GetChild(0).GetComponent<Renderer>().material.color = col;
                 timeDamage-= 1 * Time.deltaTime;

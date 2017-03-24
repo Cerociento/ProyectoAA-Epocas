@@ -44,7 +44,7 @@ public class BulletForce : MonoBehaviour {
         }
         else
         {
-            if (other.collider.CompareTag("Player")|| other.collider.CompareTag("ForceField"))
+            if (other.collider.CompareTag("Enemy")|| other.collider.CompareTag("ForceField"))
             {
                 gameObject.SetActive(false);
             }

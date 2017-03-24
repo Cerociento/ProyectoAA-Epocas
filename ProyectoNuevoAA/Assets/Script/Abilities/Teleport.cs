@@ -15,7 +15,7 @@ public class Teleport : MonoBehaviour {
     {
         pointDirection = Movement.pointEvasion;
    
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             Evade();
         }
