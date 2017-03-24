@@ -74,9 +74,8 @@ public class EnemyBehaviour : MonoBehaviour {
 		updateCurrentState+=EnemyMoves;
 	}
 
-	void ToFire(){
-		
-		Debug.Log("Estoy aquí");
+	void ToFire()
+    {
 		if(currentState==States.Shoot){
 			return;
 		} else if (currentState==States.Move){
@@ -114,19 +113,19 @@ public class EnemyBehaviour : MonoBehaviour {
 				pool[i].transform.position=canon.transform.position;
 				pool[i].transform.rotation=canon.transform.rotation;
 				pool[i].SetActive(true);
-				Debug.Log("Bala va");
+				//Debug.Log("Bala va");
 				break;
 			}
 		}
 	}
 
 	void Attack(){
-		Debug.Log("Attack");
+		//Debug.Log("Attack");
 		transform.LookAt(player.transform.position);
 		agent.enabled=false;
 		fireRate-=Time.deltaTime;
 		if(fireRate<0f){
-			Debug.Log("Pew pew");
+			//Debug.Log("Pew pew");
 			Fire();
 			fireRate=1f;
 		}

@@ -29,6 +29,7 @@ public class BulletForce : MonoBehaviour {
 
     void OnDisable()
     {
+        rig.Sleep();
         CancelInvoke();
     }
 
@@ -38,7 +39,6 @@ public class BulletForce : MonoBehaviour {
         {
             if (!other.collider.transform.GetComponent<BulletForce>())
             {
-                rig.Sleep();
                 gameObject.SetActive(false);
             }
         }
@@ -46,7 +46,6 @@ public class BulletForce : MonoBehaviour {
         {
             if (other.collider.CompareTag("Player")|| other.collider.CompareTag("ForceField"))
             {
-                rig.Sleep();
                 gameObject.SetActive(false);
             }
             rig.AddForce(transform.forward, ForceMode.Force);
@@ -55,7 +54,6 @@ public class BulletForce : MonoBehaviour {
 
     void lifeTime()
     {
-        rig.Sleep();
         gameObject.SetActive(false);
     }
 }

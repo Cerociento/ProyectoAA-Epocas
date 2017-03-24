@@ -4,9 +4,8 @@ using System.Collections.Generic;
 
 public class BulletPool : MonoBehaviour {
 
-    GameObject bulletPrefab;
     [SerializeField]
-    GameObject[] amount;
+    GameObject bulletPrefab;
     [SerializeField]
     Transform barrel;
     List<GameObject> bullets = new List<GameObject>();
@@ -15,8 +14,13 @@ public class BulletPool : MonoBehaviour {
     byte maxAmount = 5;
     [SerializeField]
     byte minAmount = 3;
-    int amountClass = 0;
-    float count = 4f;
+    [SerializeField]
+    float shotDelay = 4f;
+    [SerializeField]
+    int weaponClass = 0;
+    [SerializeField]
+    Transform gunMagazine;
+
 
     public GameObject GetBullet()
     {
@@ -55,14 +59,9 @@ public class BulletPool : MonoBehaviour {
 
     GameObject InstantiateBullet()
     {
-		GameObject obj = Instantiate(bulletPrefab, barrel.position, Quaternion.identity) as GameObject;
+		GameObject obj = Instantiate(bulletPrefab, barrel.position, Quaternion.identity,gunMagazine) as GameObject;
         bullets.Add(obj);
         return obj;
-    }
-
-    void Awake()
-    {
-        bulletPrefab = amount[0];
     }
 
     void Start()
@@ -75,65 +74,83 @@ public class BulletPool : MonoBehaviour {
 
     void Update()
     {
-
-        bulletPrefab = amount[amountClass];
+#region Editor
 #if UNITY_EDITOR
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            amountClass = 0;
+            weaponClass = 0;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            count = 4;
-            amountClass = 1;
+            shotDelay = 4;
+            weaponClass = 1;
             bullets.Clear();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            count = 0.5f;
-            amountClass = 2;
+            shotDelay = 0.5f;
+            weaponClass = 2;
             bullets.Clear();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            amountClass = 3;
+            weaponClass = 3;
             bullets.Clear();
         }
         else if (Input.GetKeyDown(KeyCode.Alpha5))
         {
-            amountClass = 4;
+            weaponClass = 4;
             bullets.Clear();
         }
 #endif
-        if (amountClass == 0 && Input.GetButtonDown("Fire1")|| amountClass == 3 && Input.GetButtonDown("Fire1"))
+#endregion
+        Shoot();
+    }
+
+    void Shoot()
+    {
+        /*
+         0 = Gun // Delay 0.3 
+         1 = Machine Gun // Delay = 4
+         2 = Shotgun // Delay = 0.5
+          */
+
+        if (weaponClass == 0|| weaponClass == 3)
         {
-            GetBullet();
-        }
-        else if (amountClass == 1 && Input.GetButton("Fire1"))
-        {
-            count--;
-            if (count <= 0)
+            if (shotDelay > 0)
+                shotDelay -= Time.deltaTime;
+            else if (shotDelay <= 0)
             {
-                GetBullet();
-                count = 4;
-            }
-        }
-        else if (amountClass == 2)
-        {
-            if (count >= 0)
-                count -= Time.deltaTime;
-            else if (count <= 0)
-            {
+                shotDelay = 0;
                 if (Input.GetButtonDown("Fire1"))
                 {
                     GetBullet();
-                    count = 0.5f;
+                    shotDelay = 0.3f;
                 }
             }
         }
-        else if (amountClass == 4)
+        else if (weaponClass == 1 && Input.GetButton("Fire1"))
         {
-            amount[4].SetActive(true);
+            shotDelay--;
+            if (shotDelay <= 0)
+            {
+                GetBullet();
+                shotDelay = 4;
+            }
+        }
+        else if (weaponClass == 2)
+        {
+            if (shotDelay > 0)
+                shotDelay -= Time.deltaTime;
+            else if (shotDelay <= 0)
+            {
+                shotDelay = 0;
+                if (Input.GetButtonDown("Fire1"))
+                {
+                    GetBullet();
+                    shotDelay = 0.5f;
+                }
+            }
         }
     }
 }

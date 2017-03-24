@@ -14,16 +14,12 @@ public class EnemyBulletForce : MonoBehaviour {
 			rigid = GetComponent<Rigidbody>();
 		}
 
-	void Update(){
-
-
-	}
-
 		void OnEnable ()
 		{
-		Invoke("lifeTime", 3f);
-		rigid.AddForce(transform.forward*bulletSpeed, ForceMode.Impulse);
-
+        rigid.WakeUp();
+        rigid.isKinematic = false;
+        Invoke("lifeTime", lifeTimeBullet);
+		rigid.AddForce(transform.forward * bulletSpeed, ForceMode.Impulse);
 		}
 
 		void OnDisable()
@@ -31,22 +27,18 @@ public class EnemyBulletForce : MonoBehaviour {
 		rigid.Sleep();
 		CancelInvoke();
 		}
-		
 
 		void lifeTime()
 		{
-		gameObject.SetActive(false);	
+        gameObject.SetActive(false);	
 		}
 
 	void OnCollisionEnter(Collision other)
 	{
-		
 			if (other.collider.CompareTag("Player"))
 			{
-				rigid.Sleep();
 				gameObject.SetActive(false);
 			}
-			
 	}
 	}
 
