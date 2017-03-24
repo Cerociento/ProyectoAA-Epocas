@@ -7,8 +7,8 @@ public class WeaponsManager : MonoBehaviour {
     GameObject[] weaponsActive = new GameObject[3];
     [SerializeField]
     List<GameObject> weapons;
-    int weaponsBackpack = 1;
-    float scroll;
+    public int weaponsBackpack = 1;
+    public float scroll;
 
     void Update ()
     {
@@ -17,7 +17,7 @@ public class WeaponsManager : MonoBehaviour {
 
     void SelectWeapond()
     {
-        scroll = Input.GetAxis("Mouse ScrollWheel");
+       scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll > 0)
         {
             weaponsBackpack++;

@@ -8,10 +8,10 @@ public class EnemyBehaviour : MonoBehaviour {
 	private UpdateState updateCurrentState;
 
 	enum States{Move, Shoot}
-	States currentState=States.Shoot;
+	States currentState=States.Move;
 
 	//MIRADA//
-	[SerializeField]
+	//[SerializeField]
 	GameObject player;
 
 	//MOVIMIENTO//
@@ -20,7 +20,8 @@ public class EnemyBehaviour : MonoBehaviour {
 	public Vector3 Target;
 	[SerializeField]
 	float range;
-	float wait=5f;
+	[SerializeField]
+	float initialWait=0f;
 	[SerializeField] 
 	float timeToWait;
 
@@ -39,11 +40,12 @@ public class EnemyBehaviour : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+
+		player=GameObject.Find("Player");
 		agent=GetComponent<NavMeshAgent>();
-		updateCurrentState+=Attack;
+		updateCurrentState+=EnemyMoves;
 		for (int i = 0; i < maxBullets; i++) {
-			GameObject obj=(GameObject)Instantiate(bullet,canon.transform.position,Quaternion.identity, gunMagazine.transform);
+			GameObject obj=(GameObject)Instantiate(bullet,canon.transform.position,Quaternion.identity);// gunMagazine.transform);
 			obj.SetActive(false);
 			pool.Add(obj);
 		}
@@ -144,9 +146,9 @@ public class EnemyBehaviour : MonoBehaviour {
 			Fire();
 			rate+=fireRate;
 		}
-		wait-=Time.deltaTime;
-		if(wait<0f){
-		wait+=timeToWait;
+		initialWait-=Time.deltaTime;
+		if(initialWait<0f){
+		initialWait+=timeToWait;
 			ToMove();
 
 		}

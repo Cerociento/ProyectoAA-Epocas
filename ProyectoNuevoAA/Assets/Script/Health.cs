@@ -7,7 +7,7 @@ public class Health : MonoBehaviour {
 	float health;
     [SerializeField]
     bool noEnemy;
-    bool noEnemyDamage;
+    public bool noEnemyDamage;
     float timeDamage = 2f;
     Color col;
     [SerializeField]
