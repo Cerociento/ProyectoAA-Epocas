@@ -59,6 +59,12 @@ public class WeaponsManagerII : MonoBehaviour {
             weaponsBackpack = 3;
     }
 
+
+	/*
+		Bien. En esta parte, el jugador pasa por algún arma que se haya dropeado. Compara su nombre, y si no la tiene y tiene espacio, la recoge.
+		Si no tiene espacio, sustituye un arma que tenga siempre que NO sea la pistola. Si tiene tres armas y el arma que ha caído ya la tiene, 
+		no la recoge (hay que poner sistema de munición).
+	*/
 	void OnTriggerEnter(Collider col){
 		if(col.gameObject.CompareTag("Weapon")){
 			string weaponName;

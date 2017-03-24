@@ -5,6 +5,8 @@ public class Health : MonoBehaviour {
 
 	[SerializeField]
 	float health;
+	[SerializeField]
+	float maxHealth;
     [SerializeField]
     bool noEnemy;
     public bool noEnemyDamage;
@@ -66,4 +68,12 @@ public class Health : MonoBehaviour {
             }
         }
     }
+
+	void OnTriggerEnter(Collider other)
+	{
+		if(other.gameObject.CompareTag("Medipack")&& health<maxHealth && noEnemy){
+			health++;
+			other.gameObject.SetActive(false);
+		}
+	}
 }
