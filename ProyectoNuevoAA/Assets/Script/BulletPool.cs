@@ -20,7 +20,7 @@ public class BulletPool : MonoBehaviour {
     int weaponClass = 0;
     [SerializeField]
     Transform gunMagazine;
-
+    public int AsWeaponActive;
 
     public GameObject GetBullet()
     {
@@ -66,6 +66,8 @@ public class BulletPool : MonoBehaviour {
 
     void Start()
     {
+        AsWeaponActive = weaponClass;
+
         for (byte i = 0; i < minAmount; i++)
         {
             InstantiateBullet();
@@ -74,7 +76,7 @@ public class BulletPool : MonoBehaviour {
 
     void Update()
     {
-#region Editor
+        #region Editor
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {

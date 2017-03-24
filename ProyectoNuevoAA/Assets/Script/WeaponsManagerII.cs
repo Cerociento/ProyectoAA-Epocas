@@ -7,8 +7,8 @@ public class WeaponsManagerII : MonoBehaviour {
     List<GameObject> weaponsActive; // = new GameObject[3];
     [SerializeField]
     List<GameObject> weapons;
-    public int weaponsBackpack = 1;
-    public float scroll;
+    int weaponsBackpack = 1;
+    float scroll;
 
 	void Start(){
 		weaponsActive.Add(weapons[0]);
@@ -16,7 +16,6 @@ public class WeaponsManagerII : MonoBehaviour {
 
     void Update ()
     {
-		
         SelectWeapond();
     }
 
@@ -65,8 +64,9 @@ public class WeaponsManagerII : MonoBehaviour {
 		Si no tiene espacio, sustituye un arma que tenga siempre que NO sea la pistola. Si tiene tres armas y el arma que ha caído ya la tiene, 
 		no la recoge (hay que poner sistema de munición).
 	*/
-	void OnTriggerEnter(Collider col){
-		if(col.gameObject.CompareTag("Weapon")){
+	void OnTriggerEnter(Collider col)
+    {
+        if(col.gameObject.CompareTag("Weapon")){
 			string weaponName;
 			weaponName=col.name;
 			int weaponNumber=0;
@@ -95,5 +95,5 @@ public class WeaponsManagerII : MonoBehaviour {
 			}
 			col.gameObject.SetActive(false);
 		}
-	}
+    }
 }
