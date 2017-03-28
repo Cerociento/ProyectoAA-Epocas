@@ -8,10 +8,14 @@ public class WeaponsManager : MonoBehaviour {
     [SerializeField]
     //AQUI van todas las armas del juego
     List<GameObject> weapons;
+	[Tooltip("Cantidad de munición que se restaurará al coger un arma repetida. No sobrepasará el máximo del arma.")]
+	[SerializeField]
+	int ammoRestore;
     int weaponsBackpack = 0;
     float scroll;
     [SerializeField]
     int weaponNumber;
+	public int weaponAmmo;
 
     void Update ()
     {
@@ -69,11 +73,12 @@ public class WeaponsManager : MonoBehaviour {
                 weaponsActive[numberRandom] = weapons[weaponNumber];
                 /*Si queres que se active automaticamente el arma NUEVA
                 Descomentar la linea de abajo */
-                //weaponsBackpack = numberRandom; 
+                weaponsBackpack = numberRandom; 
                 Debug.Log("NUEVA  " + weaponsActive[numberRandom].name);
             }
             else
             {
+				weaponsActive[weaponNumber].GetComponent<BulletPool>().ammo+=ammoRestore;
                 Debug.Log("Recarga  " + weaponsActive[numberRandom].name);
             }
         }        

@@ -1,0 +1,13 @@
+28-03-17
+Añadido sistema de munición. Scripts tocados:
+BulletPool;
+WeaponManager;
+
+BulletPool:
+Al disparar las armas, su munición baja uno (excepto pistola base).
+Al llegar a 0, dejan de disparar.
+Si el número de balas sobrepasa el máximo, se reajusta.
+
+WeaponManager:
+Si coges un arma dropeada que ya tienes, aumenta su munición. No sobrepasa el máximo.
+Añadido 'restoreAmmo'. Decide cuanta munición restaura al pasar por encima del arma.

@@ -20,6 +20,11 @@ public class BulletPool : MonoBehaviour {
     int weaponClass = 0;
     [SerializeField]
     Transform gunMagazine;
+	//[SerializeField]
+	[Tooltip("Munición actual del arma. Se reajustará al máximo si lo sobrepasa.")]
+	public int ammo;
+	[Tooltip("Munición máxima del arma.")]
+	public int maxAmmo;
     public int AsWeaponActive;
 
     public GameObject GetBullet()
@@ -28,6 +33,8 @@ public class BulletPool : MonoBehaviour {
 
         foreach (GameObject bullet in bullets)
         {
+
+
             if (!expandable && index >= maxAmount)
                 break;
 
@@ -37,6 +44,7 @@ public class BulletPool : MonoBehaviour {
                 bullet.transform.rotation = barrel.rotation;
                 bullet.SetActive(true);
                 expandable = false;
+				//ammo--;
                 return bullet;
             }
 
@@ -76,6 +84,10 @@ public class BulletPool : MonoBehaviour {
 
     void Update()
     {
+		if(ammo>maxAmmo){
+			ammo=maxAmmo;
+		}
+		
         #region Editor
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -127,17 +139,25 @@ public class BulletPool : MonoBehaviour {
                 shotDelay = 0;
                 if (Input.GetButtonDown("Fire1"))
                 {
+					if(weaponClass==0){
                     GetBullet();
-                    shotDelay = 0.3f;
-                }
+						shotDelay = 0.3f;}
+                
+					if(weaponClass==3 && ammo>0){
+					GetBullet();
+						ammo--;
+					shotDelay = 0.3f;}
+				}
             }
         }
-        else if (weaponClass == 1 && Input.GetButton("Fire1"))
+		else if (weaponClass == 1 && Input.GetButton("Fire1") && ammo>0)
         {
             shotDelay--;
-            if (shotDelay <= 0)
+
+			if (shotDelay <= 0)
             {
                 GetBullet();
+				ammo--;
                 shotDelay = 4;
             }
         }
@@ -148,18 +168,20 @@ public class BulletPool : MonoBehaviour {
             else if (shotDelay <= 0)
             {
                 shotDelay = 0;
-                if (Input.GetButtonDown("Fire1"))
+				if (Input.GetButtonDown("Fire1")&&ammo>0)
                 {
                     GetBullet();
+					ammo--;
                     shotDelay = 0.5f;
                 }
             }
         }
         else if (weaponClass == 4)
         {
-            if (Input.GetButtonDown("Fire2"))
+			if (Input.GetButtonDown("Fire2")&&ammo>0)
             {
                 GetBullet();
+				ammo--;
             }
         }
 
