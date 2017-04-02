@@ -33,9 +33,10 @@ public class EnemyBulletForce : MonoBehaviour {
         gameObject.SetActive(false);	
 	}
 
-	void OnCollisionEnter(Collision other)
-	{
+	void OnCollisionEnter(Collision other){
+	if(other.gameObject.CompareTag("Enemy")||other.gameObject.CompareTag("Wall"))
 		gameObject.SetActive(false);
 	}
+
 }
 
