@@ -9,9 +9,12 @@ public class CameraMov : MonoBehaviour
     Transform target;
     [SerializeField]
     Vector3 camPosition;
+    [SerializeField]
+    bool active;
     
     void LateUpdate()
     {
-        transform.position = Vector3.Lerp(transform.position, target.position + camPosition, Time.deltaTime * speed);
+        if(active)
+            transform.position = Vector3.Lerp(transform.position, target.position + camPosition, Time.deltaTime * speed);
     }
 }

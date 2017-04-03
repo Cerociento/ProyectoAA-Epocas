@@ -72,13 +72,13 @@ public class WeaponsManager : MonoBehaviour {
                 weaponsActive[numberRandom].SetActive(false);
                 weaponsActive[numberRandom] = weapons[weaponNumber];
                 /*Si queres que se active automaticamente el arma NUEVA
-                Descomentar la linea de abajo */
+                Descomentar la linea de abajo*/
                 weaponsBackpack = numberRandom; 
                 Debug.Log("NUEVA  " + weaponsActive[numberRandom].name);
             }
             else
             {
-				weaponsActive[weaponNumber].GetComponent<BulletPool>().ammo+=ammoRestore;
+				weaponsActive[weaponNumber].GetComponent<BulletPool>().ammo += ammoRestore;
                 Debug.Log("Recarga  " + weaponsActive[numberRandom].name);
             }
         }        

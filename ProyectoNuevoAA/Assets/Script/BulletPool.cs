@@ -33,8 +33,6 @@ public class BulletPool : MonoBehaviour {
 
         foreach (GameObject bullet in bullets)
         {
-
-
             if (!expandable && index >= maxAmount)
                 break;
 
@@ -84,8 +82,9 @@ public class BulletPool : MonoBehaviour {
 
     void Update()
     {
-		if(ammo>maxAmmo){
-			ammo=maxAmmo;
+		if(ammo>maxAmmo)
+        {
+			ammo = maxAmmo;
 		}
 		
         #region Editor
