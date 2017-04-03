@@ -27,10 +27,15 @@ public class Health : MonoBehaviour {
 
     void OnCollisionEnter(Collision col)
     {
-		if(col.collider.CompareTag("BulletEnemy"))
+		if(col.collider.CompareTag("BulletEnemy") && !noEnemyDamage)
         {
+			col.collider.gameObject.SetActive(false);
 			health--;
             noEnemyDamage = true;
+		}
+		if(col.collider.CompareTag("BulletEnemy") && noEnemyDamage)
+		{
+			col.collider.gameObject.SetActive(false);
 		}
         else if(!noEnemy && col.collider.CompareTag("Bullet"))
         {
