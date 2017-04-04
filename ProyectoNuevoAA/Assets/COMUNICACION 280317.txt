@@ -1,4 +1,30 @@
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+**04/04/2017**
+
+Creado el sistema de cámara. La cámara te sigue hasta que llega ha ciertos puntos, donde se detiene hasta que acabas con todos los enemigos.
+
+Ahora se puede añadir varios spawn de enemigos a "EnemySpawn" para las zonas en las que hay muchos enemigos o para diversificar los puntos de spawn.
+
+Nivel provisional añadido
+
+		--------------------------------¡¡¡OJO!!!!-----------------------------------
+		*																			*
+		*                           -Script WEAPONDROP-                             *
+		*	 "void OnDisable" cambiado por "public void Drop" por multiples errores *
+		*																			*
+		-----------------------------------------------------------------------------
+
+Cambios en script "health". Habia booleanos mal puestos
+
+				/*VIDA DEL PLAYER A 12000 PARA PRUEBAS*/
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
 28-03-17
+
 Añadido sistema de munición. Scripts tocados:
 BulletPool;
 WeaponManager;
@@ -11,3 +37,5 @@ Si el número de balas sobrepasa el máximo, se reajusta.
 WeaponManager:
 Si coges un arma dropeada que ya tienes, aumenta su munición. No sobrepasa el máximo.
 Añadido 'restoreAmmo'. Decide cuanta munición restaura al pasar por encima del arma.
+
+

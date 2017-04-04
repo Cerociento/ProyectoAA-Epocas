@@ -10,26 +10,28 @@ public class EnemySpawn : MonoBehaviour {
 	[SerializeField]
 	GameObject[] typeOfEnemies;
 	[SerializeField]
-	Transform spawnPoint;
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+	Transform[] spawnPoint;
+    [Tooltip("Activar para que pare la cámara al pasar")]
+    [SerializeField]
+    bool camInactive;
 
 	void OnTriggerEnter(Collider col){
-		if(col.gameObject.CompareTag("Player")){
+		if(col.gameObject.CompareTag("Player"))
+        {
+          if(camInactive)
+            Camera.main.GetComponent<CameraMov>().active = false;
+        
 		int amountOfEnemies=Random.Range(minAmountOfEnemies, maxAmountOfEnemies);
 		int enemyType;
-		for (int i = 0; i < amountOfEnemies; i++) {
-			enemyType=Random.Range(0,typeOfEnemies.Length);
-				Instantiate(typeOfEnemies[enemyType], spawnPoint.position, Quaternion.identity);
-		}
+          foreach (Transform point in spawnPoint)
+            {
+              for (int i = 0; i < amountOfEnemies; i++)
+                {
+                   enemyType = Random.Range(0, typeOfEnemies.Length);
+                   Instantiate(typeOfEnemies[enemyType], point.position, Quaternion.identity);
+                }
+            }
+
 		gameObject.SetActive(false);
 	}
 	}

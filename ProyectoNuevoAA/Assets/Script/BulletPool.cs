@@ -20,6 +20,7 @@ public class BulletPool : MonoBehaviour {
     int weaponClass = 0;
     [SerializeField]
     Transform gunMagazine;
+    public bool ammoBox;
 	//[SerializeField]
 	[Tooltip("Munición actual del arma. Se reajustará al máximo si lo sobrepasa.")]
 	public int ammo;
@@ -177,13 +178,11 @@ public class BulletPool : MonoBehaviour {
         }
         else if (weaponClass == 4)
         {
-			if (Input.GetButtonDown("Fire2")&&ammo>0)
+			if (Input.GetButtonDown("Fire2") && ammo>0)
             {
                 GetBullet();
 				ammo--;
             }
         }
-
-
     }
 }

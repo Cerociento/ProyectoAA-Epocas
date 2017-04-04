@@ -8,7 +8,7 @@ public class Health : MonoBehaviour {
 	[SerializeField]
 	float maxHealth;
     [SerializeField]
-    bool noEnemy;
+    bool isPlayer;
     public bool noEnemyDamage;
     float timeDamage = 2f;
     Color col;
@@ -27,35 +27,44 @@ public class Health : MonoBehaviour {
 
     void OnCollisionEnter(Collision col)
     {
-		if(col.collider.CompareTag("BulletEnemy") && !noEnemyDamage)
+		if(col.collider.CompareTag("BulletEnemy") && isPlayer && !noEnemyDamage)
         {
 			col.collider.gameObject.SetActive(false);
 			health--;
             noEnemyDamage = true;
 		}
+        if(col.collider.CompareTag("Water") && isPlayer)
+        {
+            health = health - health;
+            noEnemyDamage = true;
+        }
 		if(col.collider.CompareTag("BulletEnemy") && noEnemyDamage)
 		{
 			col.collider.gameObject.SetActive(false);
 		}
-        else if(!noEnemy && col.collider.CompareTag("Bullet"))
+        else if(!isPlayer && col.collider.CompareTag("Bullet"))
         {
             health--;
         }
 
-        if (!noEnemy && col.collider.CompareTag("Grenade"))
+        if (!isPlayer && col.collider.CompareTag("Grenade"))
         {
             health = health - 2;
         }
 
          if (health<=0)
         {
+            if(!isPlayer)
+            {
+                transform.GetComponent<WeaponDrop>().Drop();
+            }
 			gameObject.SetActive(false);
 		}
 	}
 
     void PlayerDamage()
     {
-        if (noEnemy)
+        if (isPlayer)
         {
             if (noEnemyDamage)
             {
@@ -76,7 +85,7 @@ public class Health : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other)
 	{
-		if(other.gameObject.CompareTag("Medipack")&& health<maxHealth && noEnemy){
+		if(other.gameObject.CompareTag("Medipack")&& health<maxHealth && isPlayer){
 			health++;
 			other.gameObject.SetActive(false);
 		}

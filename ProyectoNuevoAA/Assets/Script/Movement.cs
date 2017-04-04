@@ -16,7 +16,7 @@ public class Movement : MonoBehaviour {
 
     RaycastHit hit;
     Vector3 pointDirection;
-    Rigidbody rig;
+    public Rigidbody rig;
     Vector3 newPosition;
     Vector3 mov;
     Animator anim;
@@ -66,7 +66,6 @@ public class Movement : MonoBehaviour {
             Dodge();
             inGround = true;
         }
-
     }
 
     void Dodge()

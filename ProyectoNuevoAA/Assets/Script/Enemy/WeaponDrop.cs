@@ -16,13 +16,14 @@ public class WeaponDrop : MonoBehaviour {
 	List<GameObject> enabledWeapons;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
 		//Accedemos a la lista de armas desbloqueadas.
 		enabledWeapons=enemyDrop.GetComponent<FullListOfWeapons>().unlockedWeapons;
 	}
 	
 	// Update is called once per frame
-	void OnDisable () {
+	public void Drop() {
 		//if(Input.GetKeyDown(KeyCode.P)){
 		/*Esto hace que, al matar a un enemigo, se tire una probabilidad. Si ese número que sale es menor a la probabilidad de drop,
 		vuelve a generar un número aleatorio. Si ese número es menor o igual a la probabilidad de drop del arma, sale un arma aleatoria.
@@ -43,7 +44,7 @@ public class WeaponDrop : MonoBehaviour {
 			}else{
 				Instantiate(medipack,transform.position,Quaternion.identity);
 			}
-		}
-		}
+		  }
+	   }
 	}
 //}

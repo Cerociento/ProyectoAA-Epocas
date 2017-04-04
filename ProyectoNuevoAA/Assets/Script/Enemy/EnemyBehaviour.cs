@@ -96,6 +96,7 @@ public class EnemyBehaviour : MonoBehaviour {
 		}*/
 
 	void NextTarget(){
+        Debug.Log("w");
 		float xEnemy=gameObject.transform.position.x;
 		float zEnemy=gameObject.transform.position.z;
 
