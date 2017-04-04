@@ -37,10 +37,12 @@ public class EnemyBehaviour : MonoBehaviour {
 	[SerializeField]
 	float fireRate=1f;
 	float rate;
+	public Vector3 startingPosition;
 
 	// Use this for initialization
 	void Start () {
 
+		startingPosition=gameObject.transform.position;
 		player=GameObject.Find("Player");
 		agent=GetComponent<NavMeshAgent>();
 		updateCurrentState+=EnemyMoves;
@@ -102,10 +104,18 @@ public class EnemyBehaviour : MonoBehaviour {
 
 		float xPos=Random.Range(xEnemy-range, xEnemy+range);
 		float zPos=Random.Range(zEnemy-range, zEnemy+range);
-
+		if(xPos>startingPosition.x+range)
+			xPos=startingPosition.x+range;
+		else if(xPos<startingPosition.x-range)
+			xPos=startingPosition.x-range;
+		else if(zPos>startingPosition.z+range)
+			zPos=startingPosition.z+range;
+		else if(zPos<startingPosition.z-range)
+			zPos=startingPosition.z-range;
 		Target=new Vector3(xPos,gameObject.transform.position.y,zPos);
 
 		agent.SetDestination(Target);
+
 	}
 
 

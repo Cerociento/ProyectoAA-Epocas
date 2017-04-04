@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class WeaponsManager : MonoBehaviour {
 
     [SerializeField]
-    List<GameObject> weaponsActive = new List<GameObject>(3);
+	List<GameObject> weaponsActive = new List<GameObject>(3);
     [SerializeField]
     //AQUI van todas las armas del juego
     List<GameObject> weapons;
@@ -80,7 +80,7 @@ public class WeaponsManager : MonoBehaviour {
             }
             else
             {
-				weaponsActive[weaponNumber].GetComponent<BulletPool>().ammo += ammoRestore;
+				weaponsActive[weaponsBackpack].GetComponent<BulletPool>().ammo += ammoRestore;
                 if (!other.GetComponent<BulletPool>().ammoBox)
                     other.gameObject.SetActive(false);
                 Debug.Log("Recarga  " + weaponsActive[numberRandom].name);
