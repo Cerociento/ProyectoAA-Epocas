@@ -24,7 +24,7 @@ public class WeaponsManager : MonoBehaviour {
 
     void SelectWeapond()
     {
-       scroll = Input.GetAxis("Mouse ScrollWheel");
+        scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll > 0)
         {
             weaponsBackpack++;
@@ -55,35 +55,48 @@ public class WeaponsManager : MonoBehaviour {
                 break;
         }
 
-        if (weaponsBackpack <= 0)
-            weaponsBackpack = 0;
-        else if (weaponsBackpack >= 3)
+        if (weaponsBackpack <= -1)
             weaponsBackpack = 2;
+        else if (weaponsBackpack >= 3)
+            weaponsBackpack = 0;
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Weapon"))
         {
-            int numberRandom = Random.Range(1, 3);
+            //int numberRandom = Random.Range(1, 3); 
             weaponNumber = other.GetComponent<BulletPool>().AsWeaponActive;
-            if (weaponsActive.IndexOf(weapons[weaponNumber]) < 0)
+            if (weaponsActive.IndexOf(weapons[weaponNumber]) < 0  && Input.GetKeyDown(KeyCode.E) && weaponsBackpack != 0)
             {
-                weaponsActive[numberRandom].SetActive(false);
-                weaponsActive[numberRandom] = weapons[weaponNumber];
+                #region antiguo
+                /*weaponsActive[numberRandom].SetActive(false);
+                weaponsActive[numberRandom] = weapons[weaponNumber];*/
                 /*Si queres que se active automaticamente el arma NUEVA
                 Descomentar la linea de abajo*/
-                weaponsBackpack = numberRandom;
+                //weaponsBackpack = numberRandom;
+                #endregion
+
+                weaponsActive[weaponsBackpack].SetActive(false);
+                weaponsActive[weaponsBackpack] = weapons[weaponNumber];
+
                 if (!other.GetComponent<BulletPool>().ammoBox)
                     other.gameObject.SetActive(false);
-                Debug.Log("NUEVA  " + weaponsActive[numberRandom].name);
+                Debug.Log("NUEVA  " + weaponsActive[weaponsBackpack].name);
             }
             else
             {
-				weaponsActive[weaponsBackpack].GetComponent<BulletPool>().ammo += ammoRestore;
-                if (!other.GetComponent<BulletPool>().ammoBox)
-                    other.gameObject.SetActive(false);
-                Debug.Log("Recarga  " + weaponsActive[numberRandom].name);
+                foreach(GameObject reloadAmmo in weaponsActive)
+                {
+                    if(weaponNumber == reloadAmmo.GetComponent<BulletPool>().AsWeaponActive)
+                    {
+                        reloadAmmo.GetComponent<BulletPool>().ammo += ammoRestore;
+                        Debug.Log("Recarga  " + reloadAmmo.name);
+                        if (!other.GetComponent<BulletPool>().ammoBox)
+                            other.gameObject.SetActive(false);
+                    }
+                }
+				//weaponsActive[weaponsBackpack].GetComponent<BulletPool>().ammo += ammoRestore;
             }
         }        
     }

@@ -47,19 +47,7 @@ public class Health : MonoBehaviour {
             health--;
         }
 
-        if (!isPlayer && col.collider.CompareTag("Grenade"))
-        {
-            health = health - 2;
-        }
-
-         if (health<=0)
-        {
-            if(!isPlayer)
-            {
-                transform.GetComponent<WeaponDrop>().Drop();
-            }
-			gameObject.SetActive(false);
-		}
+        Die();
 	}
 
     void PlayerDamage()
@@ -83,11 +71,29 @@ public class Health : MonoBehaviour {
         }
     }
 
+    void Die()
+    {
+        if (health <= 0)
+        {
+            if (!isPlayer)
+            {
+                transform.GetComponent<WeaponDrop>().Drop();
+            }
+            gameObject.SetActive(false);
+        }
+    }
+
 	void OnTriggerEnter(Collider other)
 	{
-		if(other.gameObject.CompareTag("Medipack")&& health<maxHealth && isPlayer){
+		if(other.gameObject.CompareTag("Medipack")&& health<maxHealth && isPlayer)
+        {
 			health++;
 			other.gameObject.SetActive(false);
 		}
-	}
+        if (!isPlayer && other.CompareTag("Grenade"))
+        {
+            health = health - 3;
+            Die();
+        }
+    }
 }

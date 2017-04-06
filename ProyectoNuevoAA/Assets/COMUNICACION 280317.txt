@@ -2,6 +2,21 @@
 
 --------------------------------------------------------------------------------------------------------------------------------------------------
 
+**05/04/2017**
+
+Arreglado Carga de armas
+El player no se mueve con el impacto
+Corregido movimiento de rigidbody
+Las balas ya no chocan con las granadas
+
+Ahora, es el jugador quien elige que arma y cuando la quiere cambiar al colocarse sobre ella y pulsar "E"
+La seleccion de armas no tiene limites
+
+Ya no se puede volver hacia atrás y, en las zonas rojas (las de muchos enemigos), se DEBE ajustar la posicion que tendrá la camra
+de forma manual.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
 **04/04/2017**
 
 Creado el sistema de cámara. La cámara te sigue hasta que llega ha ciertos puntos, donde se detiene hasta que acabas con todos los enemigos.

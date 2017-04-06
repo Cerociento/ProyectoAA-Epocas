@@ -7,9 +7,15 @@ public class CameraMov : MonoBehaviour
      float speed;
      float speedStart;
      [SerializeField]
+     float zoomSpeed;
+     float zoomSpeedStart;
+     [SerializeField]
      Transform target;
+     [Tooltip("Ajusta posicion de la cámara")]
      [SerializeField]
      Vector3 camPosition;
+     [Tooltip("Posicion de la camara al bloquearse.")]
+     public static Vector3 camLockedPosition;
      public bool active;
      Camera cam;
      Plane[] planes;
@@ -17,45 +23,41 @@ public class CameraMov : MonoBehaviour
      void Start()
      {
         speedStart = speed;
+        zoomSpeedStart = zoomSpeed;
      }
 
     void LateUpdate()
      {
          if (active)
          {
-             // speed = speedStart;
-             if (speed <= speedStart)
-                 speed += Time.deltaTime;
-             camPosition.y = 15;
-             transform.position = Vector3.Lerp(transform.position, target.position + camPosition, Time.deltaTime * speed);
+            if (speed <= speedStart)
+            {
+                speed += Time.deltaTime;
+                zoomSpeed = zoomSpeedStart;
+            }
+
+            if (target.position.z > transform.position.z + 2)
+            {
+                transform.position = Vector3.Lerp(transform.position, target.position + camPosition, Time.deltaTime * speed);
+            }
+            else
+            {
+                transform.position = Vector3.Lerp(transform.position, new Vector3(target.position.x, target.position.y, 0) + new Vector3(camPosition.x, camPosition.y, transform.position.z), Time.deltaTime * speed);
+            }            
          }
-         else
+         else if(!active)
          {
-             camPosition.y = 20;
-             transform.position = Vector3.Lerp(transform.position, target.position + camPosition, Time.deltaTime * speed);
-             speed -= Time.deltaTime * 3;
+             transform.position = Vector3.Lerp(transform.position, camLockedPosition, Time.deltaTime * zoomSpeed);
+             speed -= Time.deltaTime;
              if (speed <= 0)
-                 speed = 0;
+            {
+                speed = 0;
+            }
          }
 
          if(!GameObject.FindObjectOfType(typeof(EnemyBehaviour)))
          {
              active = true;
          }
-
-         if(!target.GetChild(0).GetComponent<Renderer>())
-         {
-             Debug.Log("bye player");
-         }
-
-     }
-
-    void OnTriggerExit(Collider other)
-     {
-        if(other.CompareTag("Player"))
-        {
-            other.GetComponent<Movement>().rig.velocity = Vector3.zero;
-            Debug.Log("Bye");
-        }
     }
 }

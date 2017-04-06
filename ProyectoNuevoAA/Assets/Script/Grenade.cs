@@ -42,8 +42,10 @@ public class Grenade : MonoBehaviour {
             col = Color.Lerp(Color.red, Color.yellow, lerp);
             transform.GetComponent<Renderer>().material.color = col;
             privateCountExplosion-=Time.deltaTime;
+
             if (privateCountExplosion <= 0)
             {
+                transform.GetChild(0).gameObject.SetActive(true);
                 GetComponent<Renderer>().enabled = false;
                 transform.GetChild(0).GetComponent<SphereCollider>().radius += radiusExplosion;
                 particleExplosion.SetActive(true);
@@ -56,6 +58,7 @@ public class Grenade : MonoBehaviour {
     void OnDisable()
     {
         rig.Sleep();
+        transform.GetChild(0).gameObject.SetActive(false);
         CancelInvoke();
     }
 

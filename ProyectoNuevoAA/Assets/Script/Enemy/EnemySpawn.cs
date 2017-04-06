@@ -14,12 +14,26 @@ public class EnemySpawn : MonoBehaviour {
     [Tooltip("Activar para que pare la cámara al pasar")]
     [SerializeField]
     bool camInactive;
+    [Tooltip("Posicion en la que se pone la cámara")]
+    [SerializeField]
+    Vector3 camLockPosition;
+
+    CameraMov camMov;
+
+    void Start()
+    {
+        camMov = Camera.main.GetComponent<CameraMov>();
+    }
 
 	void OnTriggerEnter(Collider col){
 		if(col.gameObject.CompareTag("Player"))
         {
           if(camInactive)
-            Camera.main.GetComponent<CameraMov>().active = false;
+            {
+                camMov.active = false;
+                CameraMov.camLockedPosition = camLockPosition;
+            }
+            
         
 		int amountOfEnemies=Random.Range(minAmountOfEnemies, maxAmountOfEnemies);
 		int enemyType;
