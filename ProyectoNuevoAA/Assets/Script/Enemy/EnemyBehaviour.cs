@@ -36,8 +36,16 @@ public class EnemyBehaviour : MonoBehaviour {
 	int maxBullets = 10;
 	[SerializeField]
 	float fireRate=1f;
+	[SerializeField] [Tooltip("Tiempo inicial antes de dar una cuchillada")]
+	float stabWaitTime=2f;
+	[SerializeField] [Tooltip("Tiempo entre cuchilladas")]
+	float stabRate=4f;
+	[SerializeField] [Tooltip("Distancia de cuchillada")]
+	float stabDistance=3f;
 	float rate;
 	public Vector3 startingPosition;
+	[Tooltip("Primer movimiento aleatorio")]
+	public bool firstMove=true;
 
 	// Use this for initialization
 	void Start () {
@@ -102,8 +110,20 @@ public class EnemyBehaviour : MonoBehaviour {
 		float xEnemy=gameObject.transform.position.x;
 		float zEnemy=gameObject.transform.position.z;
 
+		if(!firstMove){
+		xEnemy=player.transform.position.x;
+		zEnemy=player.transform.position.z;
+			startingPosition=player.transform.position;}
+		if(firstMove){
+		xEnemy=gameObject.transform.position.x;
+		zEnemy=gameObject.transform.position.z;
+			firstMove=false;
+		}
+
 		float xPos=Random.Range(xEnemy-range, xEnemy+range);
-		float zPos=Random.Range(zEnemy-range, zEnemy+range);
+		float zPos=Random.Range(zEnemy-range/2, zEnemy+range/2);
+
+
 		if(xPos>startingPosition.x+range)
 			xPos=startingPosition.x+range;
 		else if(xPos<startingPosition.x-range)
@@ -151,11 +171,21 @@ public class EnemyBehaviour : MonoBehaviour {
 		//Debug.Log("Attack");
 		transform.LookAt(player.transform.position);
 		agent.enabled=false;
+		if(Vector3.Distance(gameObject.transform.position,player.transform.position)>stabDistance){
 		rate-=Time.deltaTime;
 		if(rate<0f){
 			Debug.Log("Pew pew");
 			Fire();
 			rate+=fireRate;
+		}
+		}else{
+			stabWaitTime-=Time.deltaTime;
+			if(stabWaitTime<0){
+				Debug.Log("Cuchillada");
+				player.GetComponent<Health>().health--;
+				player.GetComponent<Health>().noEnemyDamage = true;
+				stabWaitTime+=stabRate;
+			}
 		}
 		initialWait-=Time.deltaTime;
 		if(initialWait<0f){

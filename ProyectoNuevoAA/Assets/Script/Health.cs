@@ -4,7 +4,7 @@ using System.Collections;
 public class Health : MonoBehaviour {
 
 	[SerializeField]
-	float health;
+	public float health;
 	[SerializeField]
 	float maxHealth;
     [SerializeField]
