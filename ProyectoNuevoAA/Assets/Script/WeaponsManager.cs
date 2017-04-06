@@ -4,14 +4,14 @@ using System.Collections.Generic;
 public class WeaponsManager : MonoBehaviour {
 
     [SerializeField]
-	List<GameObject> weaponsActive = new List<GameObject>(3);
+	public List<GameObject> weaponsActive = new List<GameObject>(3);
     [SerializeField]
     //AQUI van todas las armas del juego
     List<GameObject> weapons;
 	[Tooltip("Cantidad de munición que se restaurará al coger un arma repetida. No sobrepasará el máximo del arma.")]
 	[SerializeField]
 	int ammoRestore;
-    int weaponsBackpack = 0;
+     int weaponsBackpack = 0;
     float scroll;
     [SerializeField]
     int weaponNumber;
