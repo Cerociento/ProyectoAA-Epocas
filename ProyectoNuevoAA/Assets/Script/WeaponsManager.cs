@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 public class WeaponsManager : MonoBehaviour {
 
-    [SerializeField]
 	public List<GameObject> weaponsActive = new List<GameObject>(3);
     [SerializeField]
     //AQUI van todas las armas del juego
@@ -11,11 +10,21 @@ public class WeaponsManager : MonoBehaviour {
 	[Tooltip("Cantidad de munición que se restaurará al coger un arma repetida. No sobrepasará el máximo del arma.")]
 	[SerializeField]
 	int ammoRestore;
-     int weaponsBackpack = 0;
+    public int weaponsBackpack = 0;
     float scroll;
-    [SerializeField]
     int weaponNumber;
 	public int weaponAmmo;
+    [SerializeField]
+    GameObject weaponDrop;
+    List<GameObject> dropPlayer;
+    public float weaponActive;
+    AmmoWheel wheel;
+
+    void Awake()
+    {
+        dropPlayer = weaponDrop.GetComponent<FullListOfWeapons>().unlockedWeapons;
+        wheel = GameObject.Find("WeaponWheel").GetComponent<AmmoWheel>();
+    }
 
     void Update ()
     {
@@ -76,7 +85,17 @@ public class WeaponsManager : MonoBehaviour {
                 Descomentar la linea de abajo*/
                 //weaponsBackpack = numberRandom;
                 #endregion
+                wheel.GetComponent<Animator>().SetTrigger("Change");
+                foreach (GameObject weapon in dropPlayer)
+                {
+                    if (weaponsActive[weaponsBackpack].GetComponent<BulletPool>().AsWeaponActive == weapon.GetComponent<BulletPool>().AsWeaponActive)
+                    {
+                        Instantiate(weapon, transform.position, Quaternion.identity);
+                        Debug.Log("SUELTA  " + weapon.name);
+                    }
+                }
 
+                //GameObject obj = Instantiate(dropPlayer[weaponsBackpack], transform.position, Quaternion.identity) as GameObject;
                 weaponsActive[weaponsBackpack].SetActive(false);
                 weaponsActive[weaponsBackpack] = weapons[weaponNumber];
 

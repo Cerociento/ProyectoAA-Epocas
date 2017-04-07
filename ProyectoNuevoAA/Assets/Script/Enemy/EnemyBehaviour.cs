@@ -16,7 +16,7 @@ public class EnemyBehaviour : MonoBehaviour {
 
 	//MOVIMIENTO//
 	public float timer;
-	public NavMeshAgent agent;
+	public UnityEngine.AI.NavMeshAgent agent;
 	public Vector3 Target;
 	[SerializeField]
 	float range;
@@ -52,7 +52,7 @@ public class EnemyBehaviour : MonoBehaviour {
 
 		startingPosition=gameObject.transform.position;
 		player=GameObject.Find("Player");
-		agent=GetComponent<NavMeshAgent>();
+		agent=GetComponent<UnityEngine.AI.NavMeshAgent>();
 		updateCurrentState+=EnemyMoves;
 		for (int i = 0; i < maxBullets; i++) {
 			GameObject obj=(GameObject)Instantiate(bullet,canon.transform.position,Quaternion.identity);// gunMagazine.transform);

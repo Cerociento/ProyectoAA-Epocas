@@ -3,7 +3,7 @@ using System.Collections;
 
 public class EnemyMovement : MonoBehaviour {
 
-	NavMeshAgent agent;
+	UnityEngine.AI.NavMeshAgent agent;
 	[SerializeField]
 	Transform[] wayPoint;
 	int nextPoint;
@@ -12,7 +12,7 @@ public class EnemyMovement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		agent=GetComponent<NavMeshAgent>();
+		agent=GetComponent<UnityEngine.AI.NavMeshAgent>();
 		NextWayPoint();
 	}
 

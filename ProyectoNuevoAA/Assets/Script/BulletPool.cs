@@ -27,6 +27,7 @@ public class BulletPool : MonoBehaviour {
 	[Tooltip("Munición máxima del arma.")]
 	public int maxAmmo;
     public int AsWeaponActive;
+    public Sprite imageWeapon;
 
     public GameObject GetBullet()
     {
@@ -168,7 +169,7 @@ public class BulletPool : MonoBehaviour {
             else if (shotDelay <= 0)
             {
                 shotDelay = 0;
-				if (Input.GetButtonDown("Fire1")&&ammo>0)
+				if (Input.GetButtonDown("Fire1") && ammo>0)
                 {
                     GetBullet();
 					ammo--;

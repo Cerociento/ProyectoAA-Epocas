@@ -11,32 +11,62 @@ public class CanvasManagement : MonoBehaviour {
 	[SerializeField]
 	Text ammoSecondWeapon;
 	GameObject player;
+    GameObject parent;
 
-	// Use this for initialization
-	void Start () {
-		player=GameObject.Find("Player");
+    void Start ()
+    {
+		player = GameObject.Find("Player");
+        parent = ammoFirstWeapon.gameObject.transform.parent.gameObject;
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		AmmoCount();
-	}
+	void Update ()
+    {
+        AmmoCount();
+    }
 
+	void AmmoCount()
+    {
+        #region Original
+        /* float currentAmmoFirstWeapon; 
+         float maxAmmoFirstWeapon;
+         float currentAmmoSecondWeapon; 
+         float maxAmmoSecondWeapon;
+         currentAmmoFirstWeapon = player.GetComponent<WeaponsManager>().weaponsActive[1].GetComponent<BulletPool>().ammo;
+         maxAmmoFirstWeapon = player.GetComponent<WeaponsManager>().weaponsActive[1].GetComponent<BulletPool>().maxAmmo;
+         if(currentAmmoFirstWeapon>maxAmmoFirstWeapon)
+             currentAmmoFirstWeapon=maxAmmoFirstWeapon;
+         currentAmmoSecondWeapon = player.GetComponent<WeaponsManager>().weaponsActive[2].GetComponent<BulletPool>().ammo;
+         maxAmmoSecondWeapon = player.GetComponent<WeaponsManager>().weaponsActive[2].GetComponent<BulletPool>().maxAmmo;
+         if(currentAmmoSecondWeapon>maxAmmoSecondWeapon)
+             currentAmmoSecondWeapon=maxAmmoSecondWeapon;
+         ammoFirstWeapon.text= currentAmmoFirstWeapon+"/"+maxAmmoFirstWeapon;
+         ammoSecondWeapon.text= currentAmmoSecondWeapon+"/"+maxAmmoSecondWeapon;*/
+        #endregion
 
-		void AmmoCount(){
-		float currentAmmoFirstWeapon; 
-		float maxAmmoFirstWeapon;
-		float currentAmmoSecondWeapon; 
-		float maxAmmoSecondWeapon;
-		currentAmmoFirstWeapon = player.GetComponent<WeaponsManager>().weaponsActive[1].GetComponent<BulletPool>().ammo;
-		maxAmmoFirstWeapon = player.GetComponent<WeaponsManager>().weaponsActive[1].GetComponent<BulletPool>().maxAmmo;
-		if(currentAmmoFirstWeapon>maxAmmoFirstWeapon)
-			currentAmmoFirstWeapon=maxAmmoFirstWeapon;
-		currentAmmoSecondWeapon = player.GetComponent<WeaponsManager>().weaponsActive[2].GetComponent<BulletPool>().ammo;
-		maxAmmoSecondWeapon = player.GetComponent<WeaponsManager>().weaponsActive[2].GetComponent<BulletPool>().maxAmmo;
-		if(currentAmmoSecondWeapon>maxAmmoSecondWeapon)
-			currentAmmoSecondWeapon=maxAmmoSecondWeapon;
-		ammoFirstWeapon.text= currentAmmoFirstWeapon+"/"+maxAmmoFirstWeapon;
-		ammoSecondWeapon.text= currentAmmoSecondWeapon+"/"+maxAmmoSecondWeapon;
-	}
+        float currentAmmoFirstWeapon;
+        float maxAmmoFirstWeapon;
+
+        if (player.GetComponent<WeaponsManager>().weaponsActive[1].activeInHierarchy)
+        {
+            parent.SetActive(true);
+            currentAmmoFirstWeapon = player.GetComponent<WeaponsManager>().weaponsActive[1].GetComponent<BulletPool>().ammo;
+            maxAmmoFirstWeapon = player.GetComponent<WeaponsManager>().weaponsActive[1].GetComponent<BulletPool>().maxAmmo;
+            if (currentAmmoFirstWeapon > maxAmmoFirstWeapon)
+                currentAmmoFirstWeapon = maxAmmoFirstWeapon;
+            ammoFirstWeapon.text = currentAmmoFirstWeapon + "/" + maxAmmoFirstWeapon;
+        }
+        else if (player.GetComponent<WeaponsManager>().weaponsActive[2].activeInHierarchy)
+        {
+            parent.SetActive(true);
+            currentAmmoFirstWeapon = player.GetComponent<WeaponsManager>().weaponsActive[2].GetComponent<BulletPool>().ammo;
+            maxAmmoFirstWeapon = player.GetComponent<WeaponsManager>().weaponsActive[2].GetComponent<BulletPool>().maxAmmo;
+            if (currentAmmoFirstWeapon > maxAmmoFirstWeapon)
+                currentAmmoFirstWeapon = maxAmmoFirstWeapon;
+            ammoFirstWeapon.text = currentAmmoFirstWeapon + "/" + maxAmmoFirstWeapon;
+        }
+        else
+        {
+            parent.SetActive(false);
+        }
+    }
 }

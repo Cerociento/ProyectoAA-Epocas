@@ -8,14 +8,14 @@ public class RandomMovement : MonoBehaviour {
 	[SerializeField]
 	public int newTarget;
 	public float speed;
-	public NavMeshAgent agent;
+	public UnityEngine.AI.NavMeshAgent agent;
 	public Vector3 Target;
 	[SerializeField]
 	float range;
 
 	// Use this for initialization
 	void Start () {
-		agent=GetComponent<NavMeshAgent>();
+		agent=GetComponent<UnityEngine.AI.NavMeshAgent>();
 	}
 	
 	// Update is called once per frame
